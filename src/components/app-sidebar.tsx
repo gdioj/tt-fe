@@ -13,12 +13,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Users, Home, ClockPlus, SunMoon, Settings } from "lucide-react";
 import { useTheme } from "next-themes";
 import useMounted from "@/util/mounted";
