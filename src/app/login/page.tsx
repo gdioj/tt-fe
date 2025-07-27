@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from '@/lib/supabase'
+import { logger } from "@/lib/logger";
 
 export default function LoginPage() {
   const handleGoogleLogin = async () => {
@@ -13,7 +14,7 @@ export default function LoginPage() {
     });
     
     if (error) {
-      console.error('Error logging in:', error.message);
+      logger.error('Error logging in:', error.message);
     }
   };
 

@@ -3,6 +3,7 @@
 import { EmployeeFormData } from "@/models";
 import { revalidatePath } from "next/cache";
 import { EmployeeService } from "@/services";
+import { logger } from "@/lib/logger";
 
 interface EmployeeDetailField {
   id: string;
@@ -25,7 +26,10 @@ export async function addEmployee(formData: ExtendedEmployeeFormData) {
 
     return result;
   } catch (error) {
-    console.error("Unexpected error in addEmployee action:", error);
+    // Log error in development only
+    if (process.env.NODE_ENV === 'development') {
+      logger.error("Unexpected error in addEmployee action:", error);
+    }
     return { success: false, error: "An unexpected error occurred" };
   }
 }

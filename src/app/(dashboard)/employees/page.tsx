@@ -3,6 +3,9 @@ import { EmployeesTable } from "@/components/employees/employees-table";
 import DashboardLayout from "../dashboard/dashboard.layout";
 import { EmployeeService } from "@/services";
 
+// Force dynamic rendering since this page requires authentication
+export const dynamic = 'force-dynamic';
+
 async function getEmployees(): Promise<Employee[]> {
     return await EmployeeService.getAll();
 }

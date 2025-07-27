@@ -23,6 +23,7 @@ interface EmployeeDetailField {
 
 interface ExtendedEmployeeFormData extends EmployeeFormData {
   employee_details: EmployeeDetailField[];
+  error?: string;
 }
 
 export function AddEmployeeModal() {
@@ -38,6 +39,7 @@ export function AddEmployeeModal() {
     notes: "",
     tags: [],
     employee_details: [],
+    error: undefined,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,10 +64,12 @@ export function AddEmployeeModal() {
         setActiveTab("basic");
         setOpen(false);
       } else {
-        alert(`Error: ${result.error}`);
+        // Show error message (replace alert with proper UI feedback)
+        setFormData(prev => ({ ...prev, error: result.error }));
       }
     } catch (_error) {
-      alert("Failed to add employee. Please try again.");
+      // Show error message (replace alert with proper UI feedback)
+      setFormData(prev => ({ ...prev, error: "Failed to add employee. Please try again." }));
     } finally {
       setIsSubmitting(false);
     }
@@ -173,7 +177,13 @@ export function AddEmployeeModal() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(newOpen) => {
+      setOpen(newOpen);
+      if (newOpen) {
+        // Clear error when opening modal
+        setFormData(prev => ({ ...prev, error: undefined }));
+      }
+    }}>
       <DialogTrigger asChild>
         <Button>
           <Plus className="h-4 w-4" />
@@ -401,6 +411,13 @@ export function AddEmployeeModal() {
                 </Button>
               )}
             </div>
+            
+            {/* Error Display */}
+            {formData.error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-md text-sm">
+                {formData.error}
+              </div>
+            )}
             
             <div className="flex space-x-2">
               <Button

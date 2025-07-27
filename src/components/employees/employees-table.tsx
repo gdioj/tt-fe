@@ -4,14 +4,17 @@ import { DataTable } from "@/components/data/data-table";
 import { columns } from "./columns";
 import { Employee } from "@/models";
 import { AddEmployeeModal } from "./add-employee-modal";
+import { logger } from "@/lib/logger";
 
 interface EmployeesTableProps {
   employees: Employee[];
 }
 
 export function EmployeesTable({ employees }: EmployeesTableProps) {
-  const handleRowClick = (row: any) => {
-    console.log('Employee clicked:', row.original);
+  const handleRowClick = (row: { original: Employee }) => {
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('Employee clicked:', row.original);
+    }
     // Future implementation: navigate to employee detail page or open edit modal
   };
 

@@ -1,5 +1,6 @@
 import { createClient } from "@/util/supabase/server";
 import { Employee, EmployeeFormData } from "@/models";
+import { logger } from "@/lib/logger";
 
 interface EmployeeDetailField {
   id: string;
@@ -32,13 +33,13 @@ export class EmployeeService {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("Error fetching employees:", error);
+        logger.error("Error fetching employees:", error);
         return [];
       }
 
       return employees || [];
     } catch (error) {
-      console.error("Unexpected error fetching employees:", error);
+      logger.error("Unexpected error fetching employees:", error);
       return [];
     }
   }
@@ -59,13 +60,13 @@ export class EmployeeService {
         .single();
 
       if (error) {
-        console.error(`Error fetching employee ${uid}:`, error);
+        logger.error(`Error fetching employee ${uid}:`, error);
         return null;
       }
 
       return employee;
     } catch (error) {
-      console.error(`Unexpected error fetching employee ${uid}:`, error);
+      logger.error(`Unexpected error fetching employee ${uid}:`, error);
       return null;
     }
   }
@@ -96,7 +97,7 @@ export class EmployeeService {
         .single();
 
       if (employeeError) {
-        console.error("Error adding employee:", employeeError);
+        logger.error("Error adding employee:", employeeError);
         return { success: false, error: employeeError.message };
       }
 
@@ -118,7 +119,7 @@ export class EmployeeService {
             .insert(detailsToInsert);
 
           if (detailsError) {
-            console.error("Error adding employee details:", detailsError);
+            logger.error("Error adding employee details:", detailsError);
             // Note: Employee was created successfully, but details failed
             // You might want to handle this differently based on your requirements
           }
@@ -127,7 +128,7 @@ export class EmployeeService {
 
       return { success: true, data: employeeData };
     } catch (error) {
-      console.error("Unexpected error:", error);
+      logger.error("Unexpected error:", error);
       return { success: false, error: "An unexpected error occurred" };
     }
   }
@@ -148,13 +149,13 @@ export class EmployeeService {
         .single();
 
       if (error) {
-        console.error("Error creating employee:", error);
+        logger.error("Error creating employee:", error);
         return null;
       }
 
       return newEmployee;
     } catch (error) {
-      console.error("Unexpected error creating employee:", error);
+      logger.error("Unexpected error creating employee:", error);
       return null;
     }
   }
@@ -177,13 +178,13 @@ export class EmployeeService {
         .single();
 
       if (error) {
-        console.error(`Error updating employee ${uid}:`, error);
+        logger.error(`Error updating employee ${uid}:`, error);
         return null;
       }
 
       return updatedEmployee;
     } catch (error) {
-      console.error(`Unexpected error updating employee ${uid}:`, error);
+      logger.error(`Unexpected error updating employee ${uid}:`, error);
       return null;
     }
   }
@@ -203,13 +204,13 @@ export class EmployeeService {
         .eq("uid", uid);
 
       if (error) {
-        console.error(`Error deleting employee ${uid}:`, error);
+        logger.error(`Error deleting employee ${uid}:`, error);
         return false;
       }
 
       return true;
     } catch (error) {
-      console.error(`Unexpected error deleting employee ${uid}:`, error);
+      logger.error(`Unexpected error deleting employee ${uid}:`, error);
       return false;
     }
   }
@@ -230,13 +231,13 @@ export class EmployeeService {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("Error searching employees:", error);
+        logger.error("Error searching employees:", error);
         return [];
       }
 
       return employees || [];
     } catch (error) {
-      console.error("Unexpected error searching employees:", error);
+      logger.error("Unexpected error searching employees:", error);
       return [];
     }
   }
@@ -259,13 +260,13 @@ export class EmployeeService {
         .order("employment_date", { ascending: false });
 
       if (error) {
-        console.error("Error fetching employees by date range:", error);
+        logger.error("Error fetching employees by date range:", error);
         return [];
       }
 
       return employees || [];
     } catch (error) {
-      console.error("Unexpected error fetching employees by date range:", error);
+      logger.error("Unexpected error fetching employees by date range:", error);
       return [];
     }
   }
@@ -288,13 +289,13 @@ export class EmployeeService {
         .order("daily_rate", { ascending: false });
 
       if (error) {
-        console.error("Error fetching employees by rate range:", error);
+        logger.error("Error fetching employees by rate range:", error);
         return [];
       }
 
       return employees || [];
     } catch (error) {
-      console.error("Unexpected error fetching employees by rate range:", error);
+      logger.error("Unexpected error fetching employees by rate range:", error);
       return [];
     }
   }

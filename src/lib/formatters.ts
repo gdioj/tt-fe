@@ -11,8 +11,8 @@
  */
 export function formatCurrency(
   value: number | null | undefined,
-  currency: string = "₱",
-  locale: string = "en-PH"
+  currency = "₱",
+  locale = "en-PH"
 ): string {
   if (value === null || value === undefined || isNaN(value)) {
     return `${currency}0.00`;
@@ -36,8 +36,8 @@ export function formatCurrency(
  */
 export function formatNumber(
   value: number | null | undefined,
-  decimals: number = 2,
-  locale: string = "en-PH"
+  decimals = 2,
+  locale = "en-PH"
 ): string {
   if (value === null || value === undefined || isNaN(value)) {
     return "0.00";
@@ -60,7 +60,7 @@ export function formatNumber(
  */
 export function formatDate(
   dateString: string | null | undefined,
-  locale: string = "en-PH",
+  locale = "en-PH",
   options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -91,8 +91,8 @@ export function formatDate(
  */
 export function formatPercentage(
   value: number | null | undefined,
-  decimals: number = 1,
-  locale: string = "en-PH"
+  decimals = 1,
+  locale = "en-PH"
 ): string {
   if (value === null || value === undefined || isNaN(value)) {
     return "0.0%";

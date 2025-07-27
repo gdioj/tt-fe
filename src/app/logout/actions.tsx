@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/util/supabase/server'
+import { logger } from "@/lib/logger";
 
 export async function logout() {
   const supabase = await createClient()
@@ -11,8 +12,8 @@ export async function logout() {
   const { error } = await supabase.auth.signOut()
 
   if (error) {
-    console.error('Error during logout:', error.message)
-    redirect('/error')
+    logger.error('Error during logout:', error.message);
+    redirect('/error');
   }
 
   // Revalidate the layout to update any cached authentication state

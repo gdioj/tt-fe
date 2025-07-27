@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react";
+import { logger } from "@/lib/logger";
 import {
   flexRender,
   getCoreRowModel,
@@ -412,7 +413,9 @@ export function DataTable<TData, TValue>({
         }
 
         // Debug logging (remove in production)
-        console.log(`Filtering ${columnId}: ${cellValue} against range [${min}, ${max}]`);
+        if (process.env.NODE_ENV === 'development') {
+          logger.log(`Filtering ${columnId}: ${cellValue} against range [${min}, ${max}]`);
+        }
 
         if (min !== undefined && cellValue < min) {
           return false;

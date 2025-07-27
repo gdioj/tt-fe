@@ -11,7 +11,7 @@ import { formatCurrency, formatDate, formatNumber, formatPercentage } from "@/li
 export function createCurrencyColumn<T>(
   accessorKey: keyof T,
   header: string,
-  currency: string = "₱"
+  currency = "₱"
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
@@ -53,7 +53,7 @@ export function createDateColumn<T>(
 export function createNumberColumn<T>(
   accessorKey: keyof T,
   header: string,
-  decimals: number = 2
+  decimals = 2
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
@@ -74,7 +74,7 @@ export function createNumberColumn<T>(
 export function createPercentageColumn<T>(
   accessorKey: keyof T,
   header: string,
-  decimals: number = 1
+  decimals = 1
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
@@ -95,7 +95,7 @@ export function createPercentageColumn<T>(
 export function createTextColumn<T>(
   accessorKey: keyof T,
   header: string,
-  transform?: (value: any) => string
+  transform?: (value: unknown) => string
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
