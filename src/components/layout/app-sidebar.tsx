@@ -11,21 +11,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { Moon, Sun } from "lucide-react";
-import { Users, Home, ClockPlus, SunMoon, Settings } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Users, Home, ClockPlus, Settings } from "lucide-react";
 import useMounted from "@/util/mounted";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 
 export function AppSidebar() {
   const mounted = useMounted();
-  const { theme, setTheme } = useTheme();
 
   // Menu items.
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/dashboard",
       icon: Home,
     },
     {
@@ -35,33 +33,21 @@ export function AppSidebar() {
     },
     {
       title: "Employees",
-      url: "#",
+      url: "/employees",
       icon: Users,
     },
   ];
 
-  const cycleTheme = () => {
-    if (theme === "system") setTheme("light");
-    else if (theme === "light") setTheme("dark");
-    else setTheme("system");
-  };
-
-  if (!mounted) return null;
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold">TaoTracker</h1>
-          <Button variant="ghost" size="icon" onClick={cycleTheme}>
-            {theme === "dark" ? (
-              <Moon />
-            ) : theme === "light" ? (
-              <Sun />
-            ) : (
-              <SunMoon />
-            )}
-          </Button>
+          <ThemeSwitcher />
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -94,6 +80,9 @@ export function AppSidebar() {
                     <span>Settings</span>
                   </a>
                 </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <LogoutButton variant="ghost" size="sm" />
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

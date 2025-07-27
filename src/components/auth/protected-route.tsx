@@ -29,15 +29,16 @@ export default function ProtectedRoute({
     checkAuth();
   }, [router]);
 
-  if (loading)
+  if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen gap-4">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           TaoTracker
         </h4>
-        <div className="spinner"></div>
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
+  }
 
   return <>{children}</>;
 }
