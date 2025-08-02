@@ -1,22 +1,36 @@
-"use client";
+'use client';
 
-import { DataTable } from "@/components/data/data-table";
-import { columns } from "./columns";
-import { Employee } from "@/models";
-import { AddEmployeeModal } from "./add-employee-modal";
-import { logger } from "@/lib/logger";
+import { DataTable } from '@/components/data/data-table';
+import { logger } from '@/lib/logger';
+import { Employee } from '@/models';
+import { useCallback, useState } from 'react';
+import { AddEmployeeModal } from './add-employee-modal';
+import { columns } from './columns';
+import { EmployeeDetailModal } from './employee-detail-modal';
 
 interface EmployeesTableProps {
   employees: Employee[];
 }
 
 export function EmployeesTable({ employees }: EmployeesTableProps) {
+  const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
+  const [modalOpen, setModalOpen] = useState(false);
+
   const handleRowClick = (row: { original: Employee }) => {
     if (process.env.NODE_ENV === 'development') {
       logger.log('Employee clicked:', row.original);
     }
-    // Future implementation: navigate to employee detail page or open edit modal
+    setSelectedEmployee(row.original);
+    setModalOpen(true);
   };
+
+  const handleRowSelectionChange = useCallback((rows: Employee[]) => {
+    setSelectedRows(rows);
+    console.log('Selected rows:', rows);
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -28,10 +42,17 @@ export function EmployeesTable({ employees }: EmployeesTableProps) {
         </div>
         <AddEmployeeModal />
       </div>
-      <DataTable 
-        columns={columns} 
-        data={employees} 
+      <DataTable
+        columns={columns}
+        data={employees}
         onRowClick={handleRowClick}
+        enableRowSelection={true}
+        onRowSelectionChange={handleRowSelectionChange}
+      />
+      <EmployeeDetailModal
+        employee={selectedEmployee}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
       />
     </div>
   );
